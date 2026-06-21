@@ -105,10 +105,16 @@
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Wing
+            // Wing animation logic
+            // Flap speed increases when jumping, slows down when falling
+            const flapSpeed = bird.velocity < 0 ? 0.3 : 0.15;
+            const wingOscillation = Math.sin(frameCount * flapSpeed) * 8;
+            
             ctx.fillStyle = "white";
             ctx.beginPath();
-            ctx.ellipse(-5, 2, 8, 5, 0, 0, Math.PI * 2);
+            // We adjust the vertical radius (height) of the wing ellipse to simulate flapping
+            // and shift it slightly so it looks attached to the body
+            ctx.ellipse(-5, 2, 8, Math.max(2, 5 + wingOscillation), 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
 
